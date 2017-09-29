@@ -8,6 +8,11 @@ from parmed.topologyobjects import DihedralType
 from torsionfit.utils import logger
 from copy import copy as _copy
 import warnings
+import itertools
+
+MODELS = []
+for i in itertools.product((0, 1), repeat=6):
+    MODELS.append(i)
 
 
 def add_missing(param_list, param, sample_n5=False):
@@ -62,7 +67,7 @@ def set_phase_0(param_list, param):
 
 
 def update_param_from_sample(param_list, param, db=None, model=None, i=-1, rj=False, phase=False, n_5=True, continuous=False,
-                             model_type='numpy'):
+                             model_type='numpy', use_model_bitmask=True):
     """
     This function parameterizes sampled torsion with values of sample i in database or current value in pymc model.
     The modifications are in place.
@@ -99,13 +104,17 @@ def update_param_from_sample(param_list, param, db=None, model=None, i=-1, rj=Fa
             if model is not None:
                 multiplicity_bitstring = model.pymc_parameters[multiplicity_key].value
         else:
-            multiplicity_bitstring = 65
+            multiplicity_bitstring = 63
         reverse_t = tuple(reversed(t))
+
+        if use_model_bitmask:
+            bitmask = MODELS[multiplicity_bitstring]
+
         for n in range(len(param.dihedral_types[t])):
             m = int(param.dihedral_types[t][n].per)
             logger().debug('Working on {}'.format(m))
             multiplicity_bitmask = 2 ** (m - 1)  # multiplicity bitmask
-            if (multiplicity_bitstring & multiplicity_bitmask) or not rj:
+            if (multiplicity_bitstring & multiplicity_bitmask) or not rj or use_model_bitmask:
                 sample = None
                 if m == 5 and not n_5:
                     continue
@@ -118,10 +127,14 @@ def update_param_from_sample(param_list, param, db=None, model=None, i=-1, rj=Fa
 
                 if db is not None and model_type == 'numpy':
                     sample = db.trace(k)[i][m-1]/4.184
+                    if use_model_bitmask:
+                        sample = sample*bitmask[m-1]
                 elif db is not None and model_type == 'openmm':
                     sample = db.trace(k)[i]
                 elif model is not None and model_type == 'numpy':
                     sample = model.pymc_parameters[k].value[m-1]/4.184
+                    if use_model_bitmask:
+                        sample = sample*bitmask[m-1]
                 elif model is not None and model_type == 'openmm':
                     sample = model.pymc_parameters[k].value
 
