@@ -66,7 +66,7 @@ setup(
     classifiers=CLASSIFIERS.splitlines(),
     packages=['torsionfit', 'torsionfit.tests', 'torsionfit.qmscan', 'torsionfit.backends', 'torsionfit.database'],
     package_dir={'torsionfit': 'torsionfit'},
-    package_data={'torsionfit.tests': package_files('torsionfit/tests/reference'), 'torsionfit.qmscan': ['torsionfit/qmscan/fgroup_smarts.yml']},
+    package_data={'torsionfit.tests': package_files('torsionfit/tests/reference')},
     zip_safe=False,
     install_requires=[
         'numpy',
