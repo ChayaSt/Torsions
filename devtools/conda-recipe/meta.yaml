@@ -20,7 +20,6 @@ requirements:
     - matplotlib
     - pymbar
     - openmoltools
-    - openeye
 
   run:
     - python
@@ -36,7 +35,6 @@ requirements:
     - pymbar
     - libgfortran ==1.0.0 [linux]
     - openmoltools
-    - openeye
 
 test:
   requires:
