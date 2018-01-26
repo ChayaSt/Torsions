@@ -10,7 +10,7 @@ addons:
 
 branches:
   only:
-  -fragment
+  - fragment
 
 install:
   - source devtools/travis-ci/install.sh
