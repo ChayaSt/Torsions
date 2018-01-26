@@ -2,7 +2,7 @@
 
 __author__ = 'Chaya D. Stern'
 
-from torsionfit.tests.utils import get_fun, has_openeye
+from torsionfit.tests.utils import has_openeye
 import unittest
 if has_openeye:
     from openmoltools.openeye import get_charges, smiles_to_oemol
@@ -14,7 +14,7 @@ if has_openeye:
 
 class TestFragments(unittest.TestCase):
 
-    @unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
+    #@unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
     def test_tag_funcgroup(self):
         """ Test tag functional groups """
         tagged_funcgroups = fragment._tag_fgroups(charged)
@@ -24,7 +24,7 @@ class TestFragments(unittest.TestCase):
         fgroup = atom.GetData('fgroup')
         self.assertEquals('amide_0', fgroup)
 
-    @unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
+    #@unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
     def test_tag_rings(self):
         """ Test tag rings"""
         tagged_rings = fragment._tag_rings(charged)
@@ -34,7 +34,7 @@ class TestFragments(unittest.TestCase):
         ringsystem = atom.GetData('ringsystem')
         self.assertEquals(1, ringsystem)
 
-    @unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
+    #@unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
     def test_union(self):
         """ Test combining ring and functional group"""
         tagged_funcgroup = fragment._tag_fgroups(charged)
@@ -43,7 +43,7 @@ class TestFragments(unittest.TestCase):
                                                         tagged_rings=tagged_rings)
         self.assertNotEqual(len(tagged_funcgroup['ether_1'][0]), len(tagged_funcgroup2['ether_1'][0]))
 
-    @unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
+    #@unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
     def test_tag_molecule(self):
         """Test tag molecule"""
         tagged_rings, tagged_funcgroup = fragment.tag_molecule(charged)
@@ -56,7 +56,7 @@ class TestFragments(unittest.TestCase):
         funcgroup = atom.GetData('fgroup')
         self.assertEquals('amide_0', funcgroup)
 
-    @unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
+    #@unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
     def test_is_ortho(self):
         """Test if substituent is ortho to rotatable bond"""
         rot_bond = charged.GetBond(oechem.OEHasBondIdx(8))
@@ -66,7 +66,7 @@ class TestFragments(unittest.TestCase):
         other_bond = charged.GetBond(oechem.OEHasBondIdx(31))
         self.assertFalse(fragment._is_ortho(bond=other_bond, rot_bond=rot_bond, next_bond=next_bond))
 
-    @unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
+    #@unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
     def test_is_fgroup(self):
         """Test is functional group """
         tagged_rings, taggged_funcgroup = fragment.tag_molecule(charged)
@@ -77,7 +77,7 @@ class TestFragments(unittest.TestCase):
         self.assertTrue(fragment._is_fgroup(taggged_funcgroup, atom))
         self.assertTrue(fragment._is_fgroup(taggged_funcgroup, bond))
 
-    @unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
+    #@unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
     def test_to_atombondset(self):
         """Test to atombond set"""
         atoms = {0, 1, 2, 3, 4, 5, 6, 41, 42, 44}
@@ -85,7 +85,7 @@ class TestFragments(unittest.TestCase):
         atom_bond_set = fragment._to_AtomBondSet(charged, atoms, bonds)
         self.assertTrue(atom_bond_set, oechem.OEAtomBondSet)
 
-    @unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
+    #@unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
     def test_build_frag(self):
         """ Test build fragment """
         bond = charged.GetBond(oechem.OEHasBondIdx(2))
@@ -95,7 +95,7 @@ class TestFragments(unittest.TestCase):
         self.assertEquals(atoms, {0, 1, 2, 3, 4, 5, 6, 41, 42, 44})
         self.assertEquals(bonds, {0, 1, 2, 3, 4})
 
-    @unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
+    #@unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
     def test_iterate_nbratoms(self):
         """Test iterate neighboring atoms"""
         rotor_bond = charged.GetBond(oechem.OEHasBondIdx(2))
@@ -106,7 +106,7 @@ class TestFragments(unittest.TestCase):
         self.assertEquals(atoms, {0, 2})
         self.assertEquals(bonds, {0, 1})
 
-    @unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
+    #@unittest.skipUnless(has_openeye, "Cannot test without OpenEye")
     def test_ring_substituents(self):
         """Test finding ring substituents"""
         tagged_rings, tagged_funcgroup = fragment.tag_molecule(charged)
