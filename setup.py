@@ -66,7 +66,7 @@ setup(
     classifiers=CLASSIFIERS.splitlines(),
     packages=['torsionfit', 'torsionfit.tests', 'torsionfit.qmscan', 'torsionfit.backends', 'torsionfit.database'],
     package_dir={'torsionfit': 'torsionfit'},
-    package_data={'': package_files('torsionfit/tests/reference'), 'torsionfit.qmscan': ['../torsionfit/qmscan/*.yml']},
+    package_data={'': package_files('torsionfit/tests/reference'), 'torsionfit.qmscan': ['*.yml']},
     zip_safe=False,
     install_requires=[
         'numpy',
