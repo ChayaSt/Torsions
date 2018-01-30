@@ -37,6 +37,7 @@ requirements:
     - libgfortran ==1.0.0 [linux]
     - openmoltools
     - yaml
+    - pyyaml
 
 test:
   requires:
