@@ -42,8 +42,8 @@ test:
     - nose-timer
   imports:
     - torsionfit
-  commands:
-    - nosetests -vv --nocapture --with-timer torsionfit
+  #commands:
+  #  - nosetests -vv --nocapture --with-timer torsionfit
 
 about:
   home: http://github.com/choderalab/torsionfit
