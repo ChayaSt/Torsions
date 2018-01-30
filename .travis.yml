@@ -12,13 +12,15 @@ branches:
   only:
   - fragment
 
-install:
+before_install:
   - source devtools/travis-ci/install.sh
   - export PYTHONUNBUFFERED=true
   - export CC=gcc
   - export CXX=g++
   - if [ "$TRAVIS_SECURE_ENV_VARS" == true ]; then openssl aes-256-cbc -K $encrypted_1d5273f07e71_key -iv $encrypted_1d5273f07e71_iv -in oe_license.txt.enc -out oe_license.txt -d; fi
   - if [ "$TRAVIS_SECURE_ENV_VARS" == false ]; then echo "OpenEye license will not be installed in forks."; fi
+
+install:
 
 script:
   - conda config --add channels ${ORGNAME} --add channels conda-forge
@@ -29,8 +31,8 @@ script:
 
 env:
   matrix:
-    - python=3.5  CONDA_PY=35
-    - python=3.6  CONDA_PY=36
+    - python=3.5  CONDA_PY=35 OPENEYE_CHANNEL="-i https://pypi.anaconda.org/OpenEye/simple/"
+    - python=3.6  CONDA_PY=36 OPENEYE_CHANNEL="-i https://pypi.anaconda.org/OpenEye/simple/"
 
   global:
     - PACKAGENAME="torsionfit"
