@@ -23,6 +23,10 @@ before_install:
 install:
 
 script:
+  # Create a test environment
+  - conda create --yes -n test python=$python
+  # Activate the test environment
+  - source activate test
   - conda config --add channels ${ORGNAME} --add channels conda-forge
   - conda install --yes --quiet pip
   - conda update --yes conda
