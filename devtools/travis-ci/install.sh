@@ -13,7 +13,7 @@ wget http://repo.continuum.io/miniconda/$MINICONDA
 bash $MINICONDA -b -p miniconda
 
 export PATH=$HOME/miniconda/bin:$PATH
-conda install --yes conda-build=2.1.5 jinja2 anaconda-client pip
+conda install --yes conda-build jinja2 anaconda-client pip
 conda config --add channels omnia
 
 # Return to original directory
